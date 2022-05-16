@@ -12,6 +12,7 @@ struct JustNewsApp: App {
     var body: some Scene {
         WindowGroup {
             ContentView()
+                .environmentObject(ArticleManager())
         }
     }
 }
