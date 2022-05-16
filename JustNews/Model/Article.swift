@@ -9,6 +9,7 @@ import Foundation
 
 import Foundation
 
+// Struct representing Article data
 struct Article: Hashable, Codable {
     let title: String
     let author: String?
@@ -20,11 +21,13 @@ struct Article: Hashable, Codable {
     let source: Source
 }
 
+// Struct representing Source data
 struct Source: Hashable, Codable {
     let id: String?
     let name: String?
 }
 
+// Struct representing Response data
 struct Response: Hashable, Codable {
     let articles: [Article]
 }
