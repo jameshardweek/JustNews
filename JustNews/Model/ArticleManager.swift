@@ -24,9 +24,9 @@ class ArticleManager : ObservableObject {
         self.articles["search"] = []
         
 //      UNCOMMENT TO RETRIEVE LATEST NEWS ON LAUNCH
-//        for category in categories {
-//            updateNews(category: category)
-//        }
+        for category in categories {
+            updateNews(category: category)
+        }
     }
     
     // Function to load dummy articles from resources folder
