@@ -8,6 +8,7 @@
 import SwiftUI
 
 struct ContentView: View {
+    // Environment object enables global access to article manager
     @EnvironmentObject private var articleManager: ArticleManager
     @State private var selection = 0
     
