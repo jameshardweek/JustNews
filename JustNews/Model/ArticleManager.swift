@@ -36,8 +36,10 @@ class ArticleManager : ObservableObject {
         for category in categories {
             do {
                 guard let file = Bundle.main.url(forResource: category, withExtension: ".json") else { return [:] }
-                let data = try Data(contentsOf: file)
-                let response = try JSONDecoder().decode(Response.self, from: data)
+                var content = try String(contentsOf: file)
+                content = content.replacingOccurrences(of: ":\"\"", with: ":null")
+                let jsonData = content.data(using: .utf8)!
+                let response = try JSONDecoder().decode(Response.self, from: jsonData)
                 articles[category] = response.articles
             } catch {
                 articles[category] = []
@@ -62,7 +64,8 @@ class ArticleManager : ObservableObject {
 
         for url in dirContents.filter({$0.pathExtension == "json"}) {
             do {
-                let content = try String(contentsOf: url)
+                var content = try String(contentsOf: url)
+                content = content.replacingOccurrences(of: ":\"\"", with: ":null")
                 let jsonData = content.data(using: .utf8)!
                 try articles.append(JSONDecoder().decode(Article.self, from: jsonData))
             } catch {
@@ -121,7 +124,8 @@ class ArticleManager : ObservableObject {
         let escapedString = search.addingPercentEncoding(withAllowedCharacters: .urlHostAllowed) ?? search
         guard let url = URL(string: "https://newsapi.org/v2/everything?q=\(escapedString)&apiKey=708ad74a333343d78c544425e5cb85cd") else { return }
         do {
-            let content = try String(contentsOf: url)
+            var content = try String(contentsOf: url)
+            content = content.replacingOccurrences(of: ":\"\"", with: ":null")
             guard let jsonData = content.data(using: .utf8) else { return }
             let response: Response = try JSONDecoder().decode(Response.self, from: jsonData)
             articles["search"] = response.articles.sorted(by: {$0.publishedAt > $1.publishedAt })
