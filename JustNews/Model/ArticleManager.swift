@@ -105,7 +105,7 @@ class ArticleManager : ObservableObject {
         guard let url = URL(string: "https://newsapi.org/v2/top-headlines?country=gb&apiKey=708ad74a333343d78c544425e5cb85cd&pageSize=50&category=\(category)") else { return }
         do {
             var content = try String(contentsOf: url)
-            content = content.replacingOccurrences(of: "\"\"", with: "null")
+            content = content.replacingOccurrences(of: "urlToImage\":\"\"", with: "urlToImage\":null")
             guard let jsonData = content.data(using: .utf8) else { return }
             let response: Response = try JSONDecoder().decode(Response.self, from: jsonData)
             articles[category] = response.articles
