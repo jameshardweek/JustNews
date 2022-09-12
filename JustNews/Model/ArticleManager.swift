@@ -14,7 +14,7 @@ import Foundation
 class ArticleManager : ObservableObject {
     let categories: [String] = ["business", "entertainment", "general", "health", "science", "sports", "technology"]
     
-    // API KEy HERE
+    // API KEY HERE
     let apiKey: String = ""
     
     // Dictionary containing all stored articles
