@@ -14,6 +14,9 @@ import Foundation
 class ArticleManager : ObservableObject {
     let categories: [String] = ["business", "entertainment", "general", "health", "science", "sports", "technology"]
     
+    // API KEy HERE
+    let apiKey: String = ""
+    
     // Dictionary containing all stored articles
     // Keys are categories
     // Values are list of Articles for that category
@@ -105,7 +108,7 @@ class ArticleManager : ObservableObject {
     
     // Updates articles for a given category
     func updateNews(category: String) {
-        guard let url = URL(string: "https://newsapi.org/v2/top-headlines?country=gb&apiKey=708ad74a333343d78c544425e5cb85cd&pageSize=50&category=\(category)") else { return }
+        guard let url = URL(string: "https://newsapi.org/v2/top-headlines?country=gb&apiKey=\(apiKey)&pageSize=50&category=\(category)") else { return }
         do {
             var content = try String(contentsOf: url)
             content = content.replacingOccurrences(of: ":\"\"", with: ":null")
@@ -122,7 +125,7 @@ class ArticleManager : ObservableObject {
     func searchNews(search: String) {
         // Text is escaped in an attempt to minimise potential errors
         let escapedString = search.addingPercentEncoding(withAllowedCharacters: .urlHostAllowed) ?? search
-        guard let url = URL(string: "https://newsapi.org/v2/everything?q=\(escapedString)&apiKey=708ad74a333343d78c544425e5cb85cd") else { return }
+        guard let url = URL(string: "https://newsapi.org/v2/everything?q=\(escapedString)&apiKey=\(apiKey)") else { return }
         do {
             var content = try String(contentsOf: url)
             content = content.replacingOccurrences(of: ":\"\"", with: ":null")
